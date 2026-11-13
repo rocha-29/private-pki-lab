@@ -1,0 +1,4 @@
+# Added with: sudo crontab -e   (root crontab)
+# Runs the monitor every 5 minutes and appends the result to a log file.
+STEPPATH=/home/kali/.step
+*/5 * * * * /home/kali/pki-lab/check-certs.sh >> /var/log/pki-lab-check.log 2>&1

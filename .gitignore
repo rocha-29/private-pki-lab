@@ -1,0 +1,8 @@
+# Never publish private keys, CA secrets or passwords
+*.key
+*_key
+*.pass
+*.pem
+secrets/
+.step/
+ca.json
