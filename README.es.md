@@ -19,8 +19,7 @@ Lab práctico donde construí mi propia **autoridad certificadora (CA) privada d
 6. [Decisiones de diseño](#6-decisiones-de-diseño)
 7. [Notas de seguridad](#7-notas-de-seguridad)
 8. [Problemas y lecciones aprendidas](#8-problemas-y-lecciones-aprendidas)
-9. [Próximos pasos](#9-próximos-pasos)
-10. [Estructura del repositorio](#10-estructura-del-repositorio)
+9. [Estructura del repositorio](#9-estructura-del-repositorio)
 
 ---
 
@@ -429,7 +428,7 @@ STEPPATH=/home/kali/.step
 
 - **Este repositorio no contiene claves privadas, contraseñas ni secretos de la CA.** El `.gitignore` bloquea `*.key`, `*_key`, `secrets/`, `.step/` y `ca.json` (que contiene la clave cifrada del provisioner).
 - Los certificados, huellas y seriales que aparecen en las capturas son datos públicos.
-- **Limitación del lab (con honestidad):** la clave raíz está en la misma VM, cifrada y fuera del directorio de la CA. En producción estaría offline (HSM, YubiKey o un equipo aislado) y solo se usaría para firmar o rotar intermedias.
+- **Limitación del lab (con honestidad):** la clave raíz está en la misma VM, cifrada y fuera del directorio de la CA. En producción estaría offline (un HSM o un equipo aislado) y solo se usaría para firmar o rotar intermedias.
 - Las contraseñas de las claves se guardan en un gestor de contraseñas; nunca se escriben en comandos ni se comparten.
 
 ## 8. Problemas y lecciones aprendidas
@@ -443,16 +442,7 @@ STEPPATH=/home/kali/.step
 | Se renovó el archivo, pero Nginx seguía sirviendo el certificado viejo | Nginx lee los certificados solo al arrancar o recargar → `--exec "systemctl reload nginx"`. |
 | Confusión entre Subject e Issuer | Subject es el dueño del certificado; Issuer es quien lo firmó. |
 
-## 9. Próximos pasos
-
-- [ ] Correr `step-ca` y el renovador como **servicios de systemd** (archivo de contraseña con permisos `600`) en vez de terminales.
-- [ ] **Revocación activa**: CRL de step-ca + `ssl_crl` en Nginx; probar revocando a `dani-client`.
-- [ ] El mismo flujo para **Apache** y **Tomcat** (almacenes PKCS#12/JKS).
-- [ ] Panel de **Prometheus + Grafana** con días restantes y disponibilidad de la CA, con reglas de alerta.
-- [ ] Clave de la intermedia en una **YubiKey (PIV)**.
-- [ ] Ansible/IaC para reconstruir todo el lab desde cero.
-
-## 10. Estructura del repositorio
+## 9. Estructura del repositorio
 
 ```
 private-pki-lab/

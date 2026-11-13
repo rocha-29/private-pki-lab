@@ -19,8 +19,7 @@ A hands-on lab where I built my own **two-tier private Certificate Authority** o
 6. [Design decisions](#6-design-decisions)
 7. [Security notes](#7-security-notes)
 8. [Problems I hit and lessons learned](#8-problems-i-hit-and-lessons-learned)
-9. [Roadmap](#9-roadmap)
-10. [Repository structure](#10-repository-structure)
+9. [Repository structure](#9-repository-structure)
 
 ---
 
@@ -429,7 +428,7 @@ STEPPATH=/home/kali/.step
 
 - **No private keys, passwords or CA secrets are in this repository.** `.gitignore` blocks `*.key`, `*_key`, `secrets/`, `.step/` and `ca.json` (which contains the encrypted provisioner key).
 - Certificates, fingerprints and serials shown in screenshots are public data.
-- **Lab limitation (honest):** the root key lives on the same VM, outside the CA's directory and encrypted. In production it would be offline (HSM, YubiKey or an air-gapped machine) and used only to sign/rotate intermediates.
+- **Lab limitation (honest):** the root key lives on the same VM, outside the CA's directory and encrypted. In production it would be offline (an HSM or an air-gapped machine) and used only to sign/rotate intermediates.
 - Passwords for keys are stored in a password manager, never typed into commands or shared.
 
 ## 8. Problems I hit and lessons learned
@@ -443,16 +442,7 @@ STEPPATH=/home/kali/.step
 | Renewed file but Nginx served the old certificate | Nginx reads certificates only at start/reload → `--exec "systemctl reload nginx"`. |
 | Subject vs Issuer confusion | Subject = owner of the certificate; Issuer = who signed it. |
 
-## 9. Roadmap
-
-- [ ] Run `step-ca` and the renewer as **systemd services** (password file with `600` permissions) instead of terminals.
-- [ ] **Active revocation**: step-ca CRL + Nginx `ssl_crl`; test revoking `dani-client`.
-- [ ] Same flow for **Apache** and **Tomcat** (PKCS#12/JKS keystores).
-- [ ] **Prometheus + Grafana** dashboard for days-to-expiry and CA availability, with alert rules.
-- [ ] Intermediate key on a **YubiKey (PIV)**.
-- [ ] Ansible/IaC to rebuild the whole lab from scratch.
-
-## 10. Repository structure
+## 9. Repository structure
 
 ```
 private-pki-lab/
