@@ -2,7 +2,7 @@
 # check-certs.sh - PKI lab monitor
 # 1) Alerts if the Nginx certificate expires in less than 8 hours.
 # 2) Alerts if the step-ca CA does not answer its health check.
-# Exit code: 0 = all OK, 1 = at least one alert (usable by cron, systemd or Prometheus).
+# Exit code: 0 = all OK, 1 = at least one alert (used by the cron job).
 
 CERT=/etc/nginx/certs/web.crt
 FECHA=$(date '+%Y-%m-%d %H:%M:%S')
